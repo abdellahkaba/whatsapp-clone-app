@@ -22,6 +22,13 @@ import static jakarta.persistence.GenerationType.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "chat")
+
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID,
+        query = "SELECT DISTINCT c FROM Chat c WHERE c.sender.id = :senderId OR c.recipient.id = :senderId ORDER BY createdDate DESC"
+)
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER,
+        query = "SELECT DISTINCT c FROM Chat c WHERE (c.sender.id = :senderId AND c.recipient.id = :recipientId) OR (c.sender.id = :recipientId AND c.recipient.id = :senderId) ORDER BY createdDate DESC"
+)
 public class Chat extends BaseAuditingEntity {
     @Id
     @GeneratedValue(strategy = UUID)
@@ -33,7 +40,7 @@ public class Chat extends BaseAuditingEntity {
     @JoinColumn(name = "recipient_id")
     private User recipient;
     @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER)
-//    @OrderBy("createdDate DESC")
+    @OrderBy("createdDate DESC")
     private List<Message> messages;
 
     @Transient
@@ -51,6 +58,7 @@ public class Chat extends BaseAuditingEntity {
         return recipient.getFirstName() + " " + recipient.getLastName();
     }
 
+    // Calcul du nombre de messages non lus
     @Transient
     public long getUnreadMessages(String senderId) {
         return this.messages
@@ -60,6 +68,7 @@ public class Chat extends BaseAuditingEntity {
                 .count();
     }
 
+    // vérifie le contenu de dernier message
     @Transient
     public String getLastMessage() {
         if (messages != null && !messages.isEmpty()) {

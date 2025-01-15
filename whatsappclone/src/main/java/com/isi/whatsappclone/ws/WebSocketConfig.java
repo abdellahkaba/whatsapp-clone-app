@@ -1,4 +1,4 @@
-package com.isi.whatsappclone.webSocket;
+package com.isi.whatsappclone.ws;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

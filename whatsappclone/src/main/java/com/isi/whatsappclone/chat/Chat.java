@@ -21,7 +21,7 @@ import static jakarta.persistence.GenerationType.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "chat")
+@Table(name = "_chat")
 
 @NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID,
         query = "SELECT DISTINCT c FROM Chat c WHERE c.sender.id = :senderId OR c.recipient.id = :senderId ORDER BY createdDate DESC"

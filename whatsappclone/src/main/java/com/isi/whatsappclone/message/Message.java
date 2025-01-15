@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "messages")
+@Table(name = "_messages")
 
 @NamedQuery(name = MessageConstants.FIND_MESSAGES_BY_CHAT_ID,
         query = "SELECT m FROM Message m WHERE m.chat.id = :chatId ORDER BY m.createdDate"

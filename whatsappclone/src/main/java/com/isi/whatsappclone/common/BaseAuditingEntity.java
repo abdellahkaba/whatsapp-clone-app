@@ -9,7 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,17 +24,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseAuditingEntity {
 
-    @Id
-    @SequenceGenerator(name = "msg_seq", sequenceName = "msg_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "msg_seq")
-    private Long id;
-    @Column(columnDefinition = "TEXT")
-    @Enumerated(EnumType.STRING)
-    private MessageState state;
-    private MessageType type;
+    @CreatedDate
+    @Column(name = "created_date", updatable = false, nullable = false)
+    private LocalDateTime createdDate;
 
-    @Column(name = "sender_id", nullable = false)
-    private String senderId;
-    @Column(name = "receiver_id", nullable = false)
-    private String receiverId;
+    @LastModifiedDate
+    @Column(name = "last_modified_date", insertable = false)
+    private LocalDateTime lastModifiedDate;
 }

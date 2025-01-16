@@ -1,0 +1,10 @@
+npm i @fortawesome/fontawesome-free
+npm i bootstrap
+npm i keycloak-js
+npm i ng-openapi-gen
+npm i quill
+npm i sockjs-client
+npm i stompjs
+
+npm run api-gen ## generate for openapi documentation
+

@@ -12,3 +12,5 @@ ng g interceptor keycloak-http
 
 ng g c main
 ng g c chat-list
+
+npm i @ctrl/ngx-emoji-mart

@@ -38,27 +38,27 @@ export class ChatListComponent {
       });
   }
 
-  // selectContact(contact: UserResponse) {
-  //   this.chatService.createChat({
-  //     'sender-id': this.keycloakService.userId as string,
-  //     'receiver-id': contact.id as string
-  //   }).subscribe({
-  //     next: (res) => {
-  //       const chat: ChatResponse = {
-  //         id: res.response,
-  //         name: contact.firstName + ' ' + contact.lastName,
-  //         recipientOnline: contact.online,
-  //         lastMessageTime: contact.lastSeen,
-  //         senderId: this.keycloakService.userId,
-  //         receiverId: contact.id
-  //       };
-  //       this.chats().unshift(chat);
-  //       this.searchNewContact = false;
-  //       this.chatSelected.emit(chat);
-  //     }
-  //   });
-  //
-  // }
+  selectContact(contact: UserResponse) {
+    this.chatService.createChat({
+      'sender-id': this.keycloakService.userId as string,
+      'receiver-id': contact.id as string
+    }).subscribe({
+      next: (res) => {
+        const chat: ChatResponse = {
+          id: res.response,
+          name: contact.firstName + ' ' + contact.lastName,
+          recipientOnline: contact.online,
+          lastMessageTime: contact.lastSeen,
+          senderId: this.keycloakService.userId,
+          receiverId: contact.id
+        };
+        this.chats().unshift(chat);
+        this.searchNewContact = false;
+        this.chatSelected.emit(chat);
+      }
+    });
+
+  }
 
   chatClicked(chat: ChatResponse) {
     this.chatSelected.emit(chat);
@@ -71,7 +71,5 @@ export class ChatListComponent {
     return lastMessage?.substring(0, 17) + '...';
   }
 
-  selectContact(contact: UserResponse) {
-    
-  }
+
 }

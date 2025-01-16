@@ -8,7 +8,7 @@ services:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: whatsapp_clone
     volumes:
-      - postgres:/data/postgres
+      - postgresql_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -34,3 +34,4 @@ networks:
 volumes:
   postgres:
     driver: local
+  postgresql_data:

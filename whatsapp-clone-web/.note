@@ -9,3 +9,6 @@ npm i stompjs
 npm run api-gen ## generate for openapi documentation
 ng g s keycloak
 ng g interceptor keycloak-http
+
+ng g c main
+ng g c chat-list

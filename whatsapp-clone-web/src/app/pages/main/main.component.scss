@@ -51,7 +51,7 @@
 
 .bg-chat {
   background-color: #efeae2;
-  background-image: url("/wa_bg.png");
+ // background-image: url("wa_bg.png");
   background-size: contain
 }
 
@@ -120,4 +120,8 @@ i {
     margin-left: -7px;
   }
 }
-
+.emojis-panel {
+  position: absolute;
+  left: 350px;
+  bottom: 50px;
+}

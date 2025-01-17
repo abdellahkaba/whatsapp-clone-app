@@ -1,4 +1,4 @@
-import {Component, input, InputSignal, output} from '@angular/core';
+import {Component, input, InputSignal, OnInit, output} from '@angular/core';
 import {ChatResponse} from "../../services/models/chat-response";
 import {UserResponse} from "../../services/models/user-response";
 import {ChatService} from "../../services/services/chat.service";
@@ -8,17 +8,18 @@ import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-chat-list',
+  templateUrl: './chat-list.component.html',
   standalone: true,
   imports: [
     DatePipe
   ],
-  templateUrl: './chat-list.component.html',
+
   styleUrl: './chat-list.component.scss'
 })
-export class ChatListComponent {
+export class ChatListComponent{
   chats: InputSignal<ChatResponse[]> = input<ChatResponse[]>([]);
   searchNewContact = false;
-  contacts: Array<UserResponse> = [];
+  contacts: UserResponse[] = [];
   chatSelected = output<ChatResponse>();
 
   constructor(
@@ -29,15 +30,21 @@ export class ChatListComponent {
   }
 
   searchContact() {
+    this.searchNewContact = true;
     this.userService.getAllUsers()
       .subscribe({
         next: (users) => {
-          this.contacts = users;
+          console.log('Contacts received:', users);
+          this.contacts = Array.isArray(users) ? users : [];
           this.searchNewContact = true;
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          this.contacts = [];
+          this.searchNewContact = false;
         }
       });
   }
-
   selectContact(contact: UserResponse) {
     this.chatService.createChat({
       'sender-id': this.keycloakService.userId as string,
@@ -55,21 +62,19 @@ export class ChatListComponent {
         this.chats().unshift(chat);
         this.searchNewContact = false;
         this.chatSelected.emit(chat);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la création du chat :', err);
       }
     });
-
   }
-
   chatClicked(chat: ChatResponse) {
     this.chatSelected.emit(chat);
   }
-
   wrapMessage(lastMessage: string | undefined): string {
     if (lastMessage && lastMessage.length <= 20) {
       return lastMessage;
     }
     return lastMessage?.substring(0, 17) + '...';
   }
-
-
 }

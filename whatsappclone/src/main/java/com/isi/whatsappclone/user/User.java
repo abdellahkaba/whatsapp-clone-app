@@ -27,7 +27,7 @@ import java.util.List;
         query = "SELECT u FROM User u WHERE u.id = :publicId")
 public class User extends BaseAuditingEntity {
 
-    private static final int LAST_ACTIVATE_INTERVAL = 5;
+    private static final int LAST_ACTIVATE_INTERVAL = 8;
 
     @Id
     private String id;
